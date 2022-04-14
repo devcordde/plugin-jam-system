@@ -1,14 +1,12 @@
-import Login from "./components/Login.js";
 import Welcome from "./pages/Welcome.js";
-import Drawer from "./components/Drawer.js";
+import User from "./components/menu/User.js";
 
 new Vue({
 	el: '#app',
 	vuetify: new Vuetify(),
 	components: {
-		Login: Login,
 		Welcome: Welcome,
-		Drawer: Drawer
+		User: User,
 	},
 	template: `
 		<Welcome>

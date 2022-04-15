@@ -7,13 +7,13 @@ import Anon from "../components/menu/Anon.js";
 export default {
 	template: `
 			<v-app>
-					  <v-navigation-drawer>
+			<template v-if="user != null">
+						  <v-navigation-drawer>
 							<User
-							v-if="user != null"
 							:user="user"
 							></User>
 							<Anon
-							v-if="user == null"
+							v-else
 							></Anon>
 							<Menu
 							></Menu>
@@ -24,6 +24,11 @@ export default {
 					  </v-main>
 			  <v-footer app>
 			  </v-footer>
+			</template>
+			<template v-else>
+				<Anon></Anon>
+			</template>
+		
 	</v-app>
 `,
 	data() {
@@ -37,7 +42,7 @@ export default {
 		User: User,
 		Menu: Menu,
 	},
-	mounted(){
+	mounted() {
 		this.user = user;
 	},
 

@@ -6,21 +6,30 @@ import Anon from "../components/menu/Anon.js";
 
 export default {
     template: `
-			<v-app>
+			<v-app id="inspire">
 			<template v-if="user != null">
-                  <v-navigation-drawer>
+                  <v-navigation-drawer
+                   v-model="drawer"
+                   app
+                   expand-on-hover
+                   mobile-breakpoint="0"
+                    >
                     <User
                     :user="user"
                     ></User>
                     <Menu
                     ></Menu>
               </v-navigation-drawer>
-              <v-main>
+              <v-main 
+              class="py-8 px-6"
+              fluid
+              >
                     <v-container fluid>
                       <router-view></router-view>
                     </v-container>
               </v-main>
 			  <v-footer app>
+			    
 			  </v-footer>
 			</template>
 			<template v-else>
@@ -33,6 +42,7 @@ export default {
         return {
             user_service: user_service,
             user: null,
+	          drawer: true
         }
     },
     components: {

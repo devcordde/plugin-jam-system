@@ -11,6 +11,26 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+  security:
+    oauth2:
+      client:
+        registration:
+          discord:
+            provider: discord
+            client-id: YOUR_CLIENT_ID_HERE
+            client-secret: YOUR_CLIENT_SECRET_HERE
+            client-authentication-method: post
+            authorization-grantType: authorization_code
+            scope:
+              - identify
+            redirect-uri: "{baseUrl}/login/oauth2/code/discord"
+            client-name: FourScouts client
+        provider:
+          discord:
+            authorization-uri: https://discordapp.com/api/oauth2/authorize
+            token-uri: https://discordapp.com/api/oauth2/token
+            user-info-uri: https://discordapp.com/api/users/@me
+            user-name-attribute: username
 
 ---
 

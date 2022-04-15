@@ -10,10 +10,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .and()
-                .authorizeRequests().antMatchers("/api/v1/**")
-                .anonymous(); // todo add real security
+        http.oauth2Login();
+//        http.authorizeRequests()
+//                .and()
+//                .authorizeRequests().antMatchers("/api/v1/**").anonymous();
 
     }
 }

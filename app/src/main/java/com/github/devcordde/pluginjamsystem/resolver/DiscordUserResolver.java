@@ -16,7 +16,7 @@ public class DiscordUserResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterAnnotation(DiscordUser.class) != null && parameter.getParameterType() == User.class;
+        return parameter.getParameterAnnotation(UserInfo.class) != null && parameter.getParameterType() == User.class;
     }
 
     @Override

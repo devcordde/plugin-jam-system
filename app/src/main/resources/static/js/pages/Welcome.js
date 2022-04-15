@@ -17,6 +17,7 @@ export default {
               </v-navigation-drawer>
               <v-main>
                     <v-container fluid>
+                      <router-view></router-view>
                     </v-container>
               </v-main>
 			  <v-footer app>

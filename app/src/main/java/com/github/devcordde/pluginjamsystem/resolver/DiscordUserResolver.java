@@ -21,8 +21,11 @@ public class DiscordUserResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        OAuth2User principal = (OAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Map<String, Object> attributes = principal.getAttributes();
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(principal instanceof OAuth2User oAuth2User)) {
+            return null;
+        }
+        Map<String, Object> attributes = oAuth2User.getAttributes();
         return new User(
                 String.format("%s#%s", attributes.get("username"), attributes.get("discriminator")),
                 (String) attributes.get("username"),

@@ -32,8 +32,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
-                .and()
+                .csrf().disable()
+                .cors().disable()
+                .logout(logout -> {
+                    logout.logoutSuccessUrl("/");
+                })
                 .authorizeRequests()
                 .antMatchers("/api/**")
                 .authenticated()
@@ -75,15 +78,18 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         return service;
     }
 
-    @Bean
+
+
+
+   /* @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:8080", "http://0.0.0.0:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowedOrigins(List.of("http://localhost:8080", "http://0.0.0.0:8080", "*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+    */
 
     private RequestEntity<?> addUserAgentHeader(RequestEntity<?> request) {
         HttpHeaders headers = new HttpHeaders();

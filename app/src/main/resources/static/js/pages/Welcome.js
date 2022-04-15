@@ -37,18 +37,11 @@ export default {
 		User: User,
 		Menu: Menu,
 	},
-	mounted() {
-		this.refreshUserData();
+	mounted(){
+		this.user = user;
 	},
-	methods: {
-		refreshUserData() {
-			user_service.getLoggedInAccount().then(value => {
-				if (value != null) {
-					this.user = value;
-				}
-			})
-		}
-	}
+
+	methods: {}
 }
 
 

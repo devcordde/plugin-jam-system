@@ -1,10 +1,14 @@
 export default {
 	template: `
-        <v-list-item class="px-2">
         <v-btn
         @click="login"
-        ><v-icon>mdi-login</v-icon></v-btn>
-        </v-list-item>
+        >
+	        <v-icon
+	        >
+	        mdi-login
+	        </v-icon>
+	        Login
+        </v-btn>
     `,
 	methods: {
 		login() {

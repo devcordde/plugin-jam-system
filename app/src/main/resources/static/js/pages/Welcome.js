@@ -34,16 +34,23 @@ export default {
                           height="500"
                           width="400"
                         >    
-                            <v-row class="flex-grow-1">
+                            <v-row no-gutters>
                                 <v-col cols="12" class="pa-10 text-center">
                                     Login
                                 </v-col>
                             </v-row>
-                            <v-row class="flex-grow-1">
-                            Image
+                            <v-row no-gutters>
+	                            <v-col cols="12" no-gutters>
+	                              <v-img
+	                                max-height="50%"
+	                                src="https://avatars.githubusercontent.com/u/60822716?s=200&v=4"
+	                              ></v-img>
+	                            </v-col>
                             </v-row>
-                            <v-row class="flex-grow-1">
-                            <Anon></Anon>
+                            <v-row no-gutters>
+	                            <v-col cols="12" class="text-center">
+	                              <Anon></Anon>
+                              </v-col>
                             </v-row>
                         </v-sheet>
                 </v-container>

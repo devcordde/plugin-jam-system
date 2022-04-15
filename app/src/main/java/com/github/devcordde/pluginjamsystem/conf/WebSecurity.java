@@ -12,7 +12,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .and()
-                .authorizeRequests().antMatchers("/api/v1/**").anonymous();
+                .authorizeRequests().antMatchers("/api/v1/**")
+                .anonymous(); // todo add real security
 
     }
 }

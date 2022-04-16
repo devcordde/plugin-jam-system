@@ -4,20 +4,20 @@ import TeamList from "../components/main/TeamList.js";
 
 export default [
 	{
-		icon: 'mdi-inbox',
-		name: "FileUpload",
-		path: '/',
-		component: FileUpload
-	},
-	{
-		icon: 'mdi-email-open',
-		name: "Other",
+		icon: 'mdi-account-multiple',
+		name: "Your Team",
 		path: '/about',
 		component: Other
 	},
 	{
-		icon: 'mdi-list',
-		name: "Team List",
+		icon: 'mdi-upload',
+		name: "File Upload",
+		path: '/',
+		component: FileUpload
+	},
+	{
+		icon: 'mdi-account-group',
+		name: "Teams",
 		path: '/teams',
 		component: TeamList
 	}

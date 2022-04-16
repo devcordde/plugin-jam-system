@@ -2,8 +2,6 @@ export default {
 	template: `
   <v-card
     :loading="loading"
-    class="mx-auto my-12"
-    max-width="374"
   >
     <template slot="progress">
       <v-progress-linear

@@ -11,8 +11,6 @@ export default {
                   <v-navigation-drawer
                    v-model="drawer"
                    app
-                   expand-on-hover
-                   mobile-breakpoint="0"
                     >
                     <User
                     :user="user"
@@ -20,11 +18,11 @@ export default {
                     <Menu
                     ></Menu>
               </v-navigation-drawer>
-              <v-main 
-              class="py-8 px-6"
-              fluid
-              >
-                    <v-container fluid>
+              <v-main>
+                    <v-container
+                    class="py-8 px-6"
+                    fluid 
+                    >
                       <router-view></router-view>
                     </v-container>
               </v-main>

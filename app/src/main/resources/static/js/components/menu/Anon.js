@@ -5,8 +5,8 @@ export default {
                           color="dark-grey"
                           elevation="5"
                           class="mx-auto"
-                          height="500"
-                          width="400"
+                          :height="$vuetify.breakpoint.xsOnly ? '100%' : '500'"
+                          :width="$vuetify.breakpoint.xsOnly ? '100%' : '400'"
                         >    
                             <v-row no-gutters>
                                 <v-col cols="12" class="pa-10 text-center">

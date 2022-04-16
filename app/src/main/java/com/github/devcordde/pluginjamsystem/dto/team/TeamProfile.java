@@ -5,6 +5,7 @@ import com.github.devcordde.pluginjamsystem.dto.User;
 public record TeamProfile(
         String name,
         User user,
-        String projectUrl
+        String projectUrl,
+        String description
 ) {
 }

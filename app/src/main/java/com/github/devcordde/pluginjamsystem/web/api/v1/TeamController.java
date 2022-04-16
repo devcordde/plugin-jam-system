@@ -18,6 +18,19 @@ import java.util.UUID;
 @RequestMapping("/api/v1/teams")
 public class TeamController {
 
+    private static final String lorem = """
+            Lorem ipsum dolor sit amet,
+            consetetur sadipscing elitr,
+            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            """;
+
     private final TeamService teamService;
 
     public TeamController(TeamService teamService) {
@@ -36,14 +49,21 @@ public class TeamController {
                         new Team(new TeamProfile(
                                 "Team1",
                                 user,
-                                "https://github.com/devcordde/plugin-jam-system"
+                                "https://github.com/devcordde/plugin-jam-system",
+                                lorem
                         ),
-                                Set.of(user, fake("Ape 2"))
+                                Set.of(
+                                        user,
+                                        fake("Ape 2"),
+                                        fake("Ape 3"),
+                                        fake("Ape 4")
+                                )
                         ),
                         new Team(new TeamProfile(
                                 "Team2",
                                 fake,
-                                "https://github.com/devcordde/plugin-jam-bot"
+                                "https://github.com/devcordde/plugin-jam-bot",
+                                lorem
                         ),
                                 Set.of(fake)
                         )
@@ -58,7 +78,8 @@ public class TeamController {
                 new Team(new TeamProfile(
                         "Team1",
                         user,
-                        "https://github.com/devcordde/plugin-jam-system"
+                        "https://github.com/devcordde/plugin-jam-system",
+                        lorem
                 ),
                         Set.of(user)
                 )

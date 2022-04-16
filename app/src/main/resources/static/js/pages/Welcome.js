@@ -8,9 +8,20 @@ export default {
     template: `
 			<v-app id="inspire">
 			<template v-if="user != null">
+									 <v-app-bar
+									 absolute
+									 dense
+                    dark
+                    shrink-on-scroll
+                    app
+                  >
+                  <v-app-bar-nav-icon 
+                  app @click="drawer = !drawer"></v-app-bar-nav-icon>
+                </v-app-bar>
                   <v-navigation-drawer
                    v-model="drawer"
                    app
+                   absolute
                     >
                     <User
                     :user="user"

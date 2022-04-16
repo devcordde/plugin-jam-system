@@ -9,11 +9,9 @@ export default {
 			<v-app id="inspire">
 			<template v-if="user != null">
 									 <v-app-bar
-									 absolute
 									 dense
-                    dark
-                    shrink-on-scroll
-                    app
+                   dark
+                   app
                   >
                   <v-app-bar-nav-icon 
                   app @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -21,7 +19,6 @@ export default {
                   <v-navigation-drawer
                    v-model="drawer"
                    app
-                   absolute
                     >
                     <User
                     :user="user"

@@ -12,7 +12,7 @@ export default {
                         {{user.name}}
                     </v-list-item-title>
                     <v-list-item-subtitle>
-                        {{user.discord_handle}}
+                        {{user.handle}}
                      </v-list-item-subtitle>
                 </v-col>
             

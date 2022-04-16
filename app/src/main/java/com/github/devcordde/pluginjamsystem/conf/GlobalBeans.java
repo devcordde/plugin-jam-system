@@ -1,33 +1,40 @@
 package com.github.devcordde.pluginjamsystem.conf;
 
-import com.github.devcordde.pluginjamsystem.resolver.DiscordUserResolver;
-import com.github.devcordde.pluginjamsystem.resolver.GitlabUserResolver;
+import com.github.devcordde.pluginjamsystem.conf.props.Oauth2ProviderToResolverMapping;
+import com.github.devcordde.pluginjamsystem.resolver.UserInfoResolver;
+import com.github.devcordde.pluginjamsystem.resolver.user.UserResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Configuration
 @EnableTransactionManagement
 public class GlobalBeans {
+    private final Map<String, UserResolver> userResolverMap = new HashMap<>();
 
-
-    @Bean
-    @Primary
-    @Qualifier("user-resolver")
-    @ConditionalOnProperty(name = "auth-settings.auth-type", havingValue = "GITLAB")
-    public HandlerMethodArgumentResolver gitlab() {
-        return new GitlabUserResolver();
+    @Autowired
+    public GlobalBeans(
+            List<? extends UserResolver> userResolvers,
+            Oauth2ProviderToResolverMapping oauth2ProviderToResolverMapping
+    ) {
+        userResolvers.forEach(userResolver -> {
+            var mappedKey = oauth2ProviderToResolverMapping.getMapping().getOrDefault(userResolver.key(), userResolver.key());
+            userResolverMap.put(mappedKey, userResolver);
+        });
     }
 
     @Bean
     @Primary
     @Qualifier("user-resolver")
-    @ConditionalOnProperty(name = "auth-settings.auth-type", havingValue = "DISCORD", matchIfMissing = true)
     public HandlerMethodArgumentResolver discord() {
-        return new DiscordUserResolver();
+        return new UserInfoResolver(this.userResolverMap);
     }
 }

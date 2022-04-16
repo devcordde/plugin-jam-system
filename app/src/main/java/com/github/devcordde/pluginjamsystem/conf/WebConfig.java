@@ -1,6 +1,7 @@
 package com.github.devcordde.pluginjamsystem.conf;
 
-import com.github.devcordde.pluginjamsystem.resolver.DiscordUserResolver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -20,6 +21,13 @@ public class WebConfig implements WebMvcConfigurer {
             "classpath:/META-INF/resources/", "classpath:/resources/",
             "classpath:/static/", "classpath:/public/"};
 
+
+    private final HandlerMethodArgumentResolver userArgumentResolver;
+    @Autowired
+    public WebConfig(@Qualifier("user-resolver") HandlerMethodArgumentResolver userArgumentResolver) {
+        this.userArgumentResolver = userArgumentResolver;
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
@@ -28,7 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new DiscordUserResolver());
+        resolvers.add(userArgumentResolver);
     }
 
     @Override

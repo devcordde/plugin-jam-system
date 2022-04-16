@@ -25,7 +25,7 @@ spring:
               - identify
               - guilds
             redirect-uri: "{baseUrl}/login/oauth2/code/discord"
-            client-name: FourScouts client
+            client-name: Discord
         provider:
           discord:
             authorization-uri: https://discordapp.com/api/oauth2/authorize

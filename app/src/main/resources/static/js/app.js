@@ -1,16 +1,25 @@
 import Welcome from "./pages/Welcome.js";
-import User from "./components/menu/User.js";
+import routes from "./util/routes.js";
+
+const router =  new VueRouter({
+	routes,
+	mode: 'hash',
+	base: '/'
+});
 
 new Vue({
 	el: '#app',
-	vuetify: new Vuetify(),
+	vuetify: new Vuetify({
+		theme: {
+			dark: true
+		},
+	}),
+	router,
 	components: {
-		Welcome: Welcome,
-		User: User,
+		Welcome: Welcome
 	},
 	template: `
 		<Welcome>
 		</Welcome>	
 	`
 })
-

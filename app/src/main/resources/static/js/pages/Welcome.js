@@ -9,6 +9,7 @@ export default {
 			<v-app id="inspire">
 			<template v-if="user != null">
 									 <v-app-bar
+									 v-if="$vuetify.breakpoint.xsOnly"
 									 dense
                    dark
                    app

@@ -1,32 +1,24 @@
 import team_service from "../../services/team_service.js";
 import TeamProfile from "./teamlist/TeamProfile.js";
-import CollapsedTeam from "./teamlist/CollapsedTeam.js";
 
 export default {
 	template: `
-			<v-card class="mx-auto">
-				   <v-list>
-					      <v-list-group
+					<span>
+					      <v-card class="mb-10"
 					        v-for="team in teams"
 					        :key="team.profile.name"
 					        v-model="team.active"
 					        no-action
 					      >
-						        <template v-slot:activator >
-								        <Collapsed-team
-								          :profile="team.profile"
-								        ></Collapsed-team>
-										</template>
+                    <h3 v-text="team.profile.name" class="mb-5"></h3>
 										<Team-profile
 										:team="team"
 										></Team-profile>
-					      </v-list-group>
-				   </v-list>
-		  </v-card>
+					      </v-card>
+		      </span>
 	`,
 	components: {
-		TeamProfile: TeamProfile,
-		CollapsedTeam
+		TeamProfile,
 	},
 	mounted() {
 		team_service.teams().then(teams => {

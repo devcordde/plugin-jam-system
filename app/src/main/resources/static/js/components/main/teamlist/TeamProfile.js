@@ -18,7 +18,7 @@ export default {
 																</v-col>
 														</v-row>
 												</v-col>
-												<v-col cols="2">
+												<v-col cols="4">
 														<v-row class="pa-5">
 														{{team.profile.description}}
 														</v-row>
@@ -32,16 +32,14 @@ export default {
 																	</v-col>
 											     </v-row>
 											     <v-row>
-													        <v-col cols="2">
-																				 <v-list-item
-																	          v-for="member in team.members"
-																	          :key="member.discord_handle"
-																	        > 
+													        <v-col cols="2" 
+													                v-for="member in team.members"
+																          :key="member.discord_handle"
+																          > 
 																			        <Team-member
 																							:member="member"
 																			        :leader="team.profile.user"
 																			        ></Team-member>
-																	        </v-list-item>
 													        </v-col>
 									        </v-row>
 										</v-col>

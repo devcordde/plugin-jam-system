@@ -3,19 +3,19 @@ import TeamProfile from "./teamlist/TeamProfile.js";
 
 export default {
 	template: `
-					<span>
-					      <v-card class="mb-10"
-					        v-for="team in teams"
-					        :key="team.profile.name"
-					        v-model="team.active"
-					        no-action
-					      >
-                    <h3 v-text="team.profile.name" class="mb-5"></h3>
-										<Team-profile
-										:team="team"
-										></Team-profile>
-					      </v-card>
-		      </span>
+        <span>
+            <v-card class="mb-10"
+                v-for="team in teams"
+                :key="team.profile.name"
+                v-model="team.active"
+                no-action
+                >
+                <Team-profile
+                    :team="team"
+                >
+                </Team-profile>
+            </v-card>
+        </span>
 	`,
 	components: {
 		TeamProfile,

@@ -23,6 +23,7 @@ spring:
             authorization-grantType: authorization_code
             scope:
               - identify
+              - guilds
             redirect-uri: "{baseUrl}/login/oauth2/code/discord"
             client-name: FourScouts client
         provider:

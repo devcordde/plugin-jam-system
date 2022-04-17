@@ -25,13 +25,20 @@ spring:
               - identify
               - guilds
             redirect-uri: "{baseUrl}/login/oauth2/code/discord"
-            client-name: FourScouts client
+            client-name: Discord
         provider:
           discord:
             authorization-uri: https://discordapp.com/api/oauth2/authorize
             token-uri: https://discordapp.com/api/oauth2/token
             user-info-uri: https://discordapp.com/api/users/@me
             user-name-attribute: username
+
+oauth:
+  registration-to-user-resolver-type:
+    mapping:
+      discord: "discord"
+      gitlab: "gitlab"
+      gitlab2: "gitlab"
 
 ---
 

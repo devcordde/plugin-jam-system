@@ -1,6 +1,6 @@
-import FileUpload from "../components/main/FileUpload.js";
-import Other from "../components/main/Other.js";
 import TeamList from "../components/main/TeamList.js";
+import FileUpload from "../components/main/fragments/FileUpload.js";
+import Other from "../components/main/fragments/Other.js";
 
 export default [
 	{

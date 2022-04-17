@@ -1,11 +1,11 @@
 export default {
-    template: `
+	template: `
         <v-container justify="space-around" fill-height fluid>
             <v-sheet
                 color="dark-grey"
                 elevation="5"
                 class="mx-auto"
-                :height="$vuetify.breakpoint.xsOnly ? '100%' : '500'"
+                :min-height="$vuetify.breakpoint.xsOnly ? '100%' : '500'"
                 :width="$vuetify.breakpoint.xsOnly ? '100%' : '400'"
                 >    
                 
@@ -27,15 +27,24 @@ export default {
                     </v-col>
                 </v-row>
                 
-                <v-row no-gutters class="pt-6">
-                    <v-col cols="12" class="text-center">
-                        <v-btn @click="login" block large
+                <v-row no-gutters>
+                    <v-col cols="12" class="pt-5 text-center">
+                        Login with
+                    </v-col>
+                </v-row>
+                
+                <v-row no-gutters class="pt-6"
+                    v-for="(item, i) in authUrls"
+                    :key="i"
+                    >
+                    <v-col cols="12">
+                        <v-btn @click="login(item.url)" 
+                            block 
+                            large
                             elevation="1"
+                            class="align-self-start"
                             >
-                            <v-icon>
-                                mdi-login
-                            </v-icon>
-                            Login
+                            {{item.name}}
                         </v-btn>
                   </v-col>
                 </v-row>
@@ -43,9 +52,15 @@ export default {
             </v-sheet>
         </v-container>
     `,
-    methods: {
-        login() {
-            window.location.href = "/oauth2/authorization/discord"
-        }
-    }
+	props: {
+		authUrls: {
+			type: Array,
+			required: true
+		}
+	},
+	methods: {
+		login(url) {
+			window.location.href = url;
+		}
+	}
 }

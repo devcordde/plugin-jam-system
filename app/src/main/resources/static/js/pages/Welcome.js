@@ -1,7 +1,7 @@
 import User from "../components/menu/User.js";
 import Menu from "../components/menu/Menu.js";
 import user_service from "../services/user_service.js";
-import Anon from "../components/menu/Anon.js";
+import Anon from "../components/main/Anon.js";
 
 
 export default {
@@ -46,7 +46,9 @@ export default {
         </template>
         
         <template v-else>
-            <Anon>
+            <Anon
+              :authUrls="authUrls"
+            >
             </Anon>
         </template>        
 	</v-app>
@@ -55,6 +57,7 @@ export default {
         return {
             user_service: user_service,
             user: null,
+	          authUrls: [],
             drawer: true
         }
     },
@@ -65,6 +68,7 @@ export default {
     },
     mounted() {
         this.user = user;
+				this.authUrls = auth_urls;
     },
 
     methods: {}

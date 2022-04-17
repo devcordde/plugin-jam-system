@@ -1,14 +1,7 @@
 import TeamList from "../components/main/TeamList.js";
-import FileUpload from "../components/main/fragments/FileUpload.js";
-import TeamSettings from "../components/main/TeamSettings.js";
+import FileUpload from "../components/main/FileUpload.js";
 
 export default [
-	{
-		icon: 'mdi-account-multiple',
-		name: "Team Settings",
-		path: '/team-settings',
-		component: TeamSettings
-	},
 	{
 		icon: 'mdi-upload',
 		name: "File Upload",

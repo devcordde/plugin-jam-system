@@ -25,7 +25,7 @@ export default {
                 
                 <v-col cols="4">
                         <v-row class="pa-5">
-                        {{team.profile.description}}
+                        <p>{{team.profile.description}}</p>
                         </v-row>
                 </v-col>
                 

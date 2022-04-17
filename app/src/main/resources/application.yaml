@@ -40,6 +40,11 @@ oauth:
       gitlab: "gitlab"
       gitlab2: "gitlab"
 
+discord-bot:
+  token: "changeme"
+  baseUrl: "localhost:8080"
+
+
 ---
 
 spring:

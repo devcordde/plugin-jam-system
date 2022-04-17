@@ -39,8 +39,6 @@ public class TeamController {
 
     @GetMapping
     public ResponseEntity<List<Team>> getTeams(@UserInfo User user) {
-
-
         var fake = fake("Ape 1");
 
 

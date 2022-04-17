@@ -5,9 +5,13 @@ import com.github.devcordde.pluginjamsystem.dto.team.Team;
 import com.github.devcordde.pluginjamsystem.dto.team.TeamProfile;
 import com.github.devcordde.pluginjamsystem.resolver.UserInfo;
 import com.github.devcordde.pluginjamsystem.services.TeamService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -79,6 +83,20 @@ public class TeamController {
                         "https://github.com/devcordde/plugin-jam-system",
                         lorem
                 ),
+                        Set.of(user)
+                )
+        );
+    }
+
+    @PostMapping(
+            path = "/save",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public ResponseEntity<Team> saveTeam(@UserInfo User user, @RequestBody TeamProfile teamProfile) {
+        return ResponseEntity.ok(
+                new Team(teamProfile,
                         Set.of(user)
                 )
         );

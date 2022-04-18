@@ -30,7 +30,10 @@ public class UsersService {
     }
 
     public List<GuildProfile> getMutualGuilds(long userId) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(userId)).path("guilds").build())
+        return client.get().uri(uriBuilder -> uriBuilder
+                        .path("{userId}/guilds")
+                        .build(userId)
+                )
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
                         return response.bodyToMono(new ParameterizedTypeReference<List<GuildProfile>>() {
@@ -44,7 +47,10 @@ public class UsersService {
 
     @Nullable
     public TeamProfile getTeam(long userId, long guildId) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(userId)).path(String.valueOf(guildId)).path("team").build())
+        return client.get().uri(uriBuilder -> uriBuilder
+                        .path("{userId}/{guildId}/team")
+                        .build(userId, guildId)
+                )
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
                         return response.bodyToMono(TeamProfile.class);
@@ -57,7 +63,10 @@ public class UsersService {
 
     @Nullable
     public UserProfile getProfile(long userId, long guildId) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(userId)).path(String.valueOf(guildId)).path("profile").build())
+        return client.get().uri(uriBuilder -> uriBuilder
+                        .path("{userId}/{guildId}/profile")
+                        .build(userId, guildId)
+                )
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
                         return response.bodyToMono(UserProfile.class);

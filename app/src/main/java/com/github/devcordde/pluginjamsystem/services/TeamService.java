@@ -33,7 +33,11 @@ public class TeamService {
     }
 
     public List<Team> getTeams(long guildId) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).build())
+        return client.get().uri(uriBuilder ->
+                        uriBuilder
+                                .path("{guildId}")
+                                .build(guildId)
+                )
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
                         return response.bodyToMono(new ParameterizedTypeReference<List<Team>>() {
@@ -46,7 +50,10 @@ public class TeamService {
     }
 
     public List<UserProfile> getMember(long guildId, int teamId) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("member").build())
+        return client.get().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/member")
+                        .build(guildId, teamId)
+                )
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
                         return response.bodyToMono(new ParameterizedTypeReference<List<UserProfile>>() {
@@ -59,7 +66,10 @@ public class TeamService {
     }
 
     public List<TeamProfile> getTeam(long guildId, int teamId) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("profile").build())
+        return client.get().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/profile")
+                        .build(guildId, teamId)
+                )
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
                         return response.bodyToMono(new ParameterizedTypeReference<List<TeamProfile>>() {
@@ -73,7 +83,10 @@ public class TeamService {
 
     @Nullable
     public LeaderToken getLeaderAuth(long guildId, int teamId, long userId) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("leader").path("auth").path(String.valueOf(userId)).build())
+        return client.get().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/leader/auth/{userId}")
+                        .build(guildId, teamId, userId)
+                )
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
                         return response.bodyToMono(LeaderToken.class);
@@ -86,7 +99,10 @@ public class TeamService {
 
     @Nullable
     public LeaderToken isLeaderAuthValid(long guildId, int teamId, String token) {
-        return client.get().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("leader").path("auth").path("check").build())
+        return client.get().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/leader/auth/check")
+                        .build(guildId, teamId)
+                )
                 .header("leader-authorization", token)
                 .exchangeToMono(response -> {
                     if (response.statusCode() == HttpStatus.OK) {
@@ -101,7 +117,10 @@ public class TeamService {
     @Nullable
     public TeamProfile setTeamName(long guildId, int teamId, String token, String name) {
         var teamProfile = new TeamProfile(name, 0L, "", "");
-        return client.put().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("leader").path("name").build())
+        return client.put().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/leader/name")
+                        .build(guildId, teamId)
+                )
                 .header("leader-authorization", token)
                 .bodyValue(teamProfile)
                 .exchangeToMono(response -> {
@@ -113,10 +132,14 @@ public class TeamService {
                 })
                 .block();
     }
+
     @Nullable
     public TeamProfile setTeamProjectUrl(long guildId, int teamId, String token, String projectUrl) {
         var teamProfile = new TeamProfile(null, 0L, projectUrl, null);
-        return client.put().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("leader").path("projecturl").build())
+        return client.put().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/leader/projecturl")
+                        .build(guildId, teamId)
+                )
                 .header("leader-authorization", token)
                 .bodyValue(teamProfile)
                 .exchangeToMono(response -> {
@@ -128,10 +151,14 @@ public class TeamService {
                 })
                 .block();
     }
+
     @Nullable
     public TeamProfile setTeamLeader(long guildId, int teamId, String token, long leader) {
         var teamProfile = new TeamProfile(null, leader, null, null);
-        return client.put().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("leader").path("leader").build())
+        return client.put().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/leader/leader")
+                        .build(guildId, teamId)
+                )
                 .header("leader-authorization", token)
                 .bodyValue(teamProfile)
                 .exchangeToMono(response -> {
@@ -143,10 +170,14 @@ public class TeamService {
                 })
                 .block();
     }
+
     @Nullable
     public TeamProfile setTeamDescription(long guildId, int teamId, String token, String description) {
         var teamProfile = new TeamProfile(null, 0L, null, description);
-        return client.put().uri(uriBuilder -> uriBuilder.path(String.valueOf(guildId)).path(String.valueOf(teamId)).path("leader").path("description").build())
+        return client.put().uri(uriBuilder -> uriBuilder
+                        .path("{guildId}/{teamId}/leader/description")
+                        .build(guildId, teamId)
+                )
                 .header("leader-authorization", token)
                 .bodyValue(teamProfile)
                 .exchangeToMono(response -> {

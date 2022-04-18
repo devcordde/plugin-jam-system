@@ -28,6 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("com.google.code.findbugs:jsr305:3.0.2")
 
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

@@ -4,32 +4,31 @@ import Overview from "./teamsettings/Overview.js";
 
 export default {
 	template: `
-        <span>
+        <v-container>
             <v-row
                 class="mb-10"
                 v-for="team in teams"
                 :key="team.profile.name"
             >
-            <v-card 
-                class="pb-10"
-                no-action
-                >
+                <v-col cols="12">
                 <Team-profile
                     :team="team"
-                    @edit="() => edit = true"
+                    @edit="() => edit = team"
                 >
                 </Team-profile>
-								<v-row v-show="edit">
-									      <v-col cols="6" offset-md="1">
-									        <Overview
-																			:profile="team.profile"
-																			@profile-update="(profile) => team.profile = profile"
-																		></Overview>
-												</v-col>
-              </v-row>
-            </v-card>
+                </v-col>
+							      <v-container v-show="edit == team">
+							        <Overview
+																	:profile="team.profile"
+																	@profile-update="(profile) => {
+																	team.profile = profile;
+																	edit = null;
+																	}"
+																	@abort="() => edit = null"
+																></Overview>
+										</v-container>
 						</v-row>
-        </span>
+        </v-container>
 	`,
 	components: {
 		TeamProfile,
@@ -37,6 +36,7 @@ export default {
 	},
 	mounted() {
 		team_service.teams().then(teams => {
+			this.edits = {};
 			teams.forEach(team => {
 				this.teams.push(team);
 			});
@@ -46,7 +46,7 @@ export default {
 		return {
 			team_service: team_service,
 			teams: [],
-			edit: false
+			edit: null
 		}
 	}
 }

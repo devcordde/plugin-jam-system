@@ -2,7 +2,7 @@ import team_service from "../../../services/team_service.js";
 
 export default {
 	template: `
-			<v-card elevation="0" cols="12" v-if="profile_data">
+			<v-card cols="12" v-if="profile_data">
 						<v-row class="ml-10">
 									<v-col cols="2">
 											<v-row class="mt-10">
@@ -42,6 +42,10 @@ export default {
 										@click="saveSettings" 
 										color="success"
 										>Save</v-btn>
+										<v-btn 
+										@click="abort" 
+										color="abort"
+										>Abort</v-btn>
 								</v-col>
 						</v-row>
 			</v-card>
@@ -80,6 +84,9 @@ export default {
 				this.update(value.profile);
 				console.log("Saved Settings: " + JSON.stringify(value))
 			});
+		},
+		abort() {
+			this.$emit("abort");
 		}
 	}
 }

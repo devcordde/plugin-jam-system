@@ -23,7 +23,6 @@ spring:
             authorization-grantType: authorization_code
             scope:
               - identify
-              - guilds
             redirect-uri: "{baseUrl}/login/oauth2/code/discord"
             client-name: Discord
         provider:
@@ -39,6 +38,11 @@ oauth:
       discord: "discord"
       gitlab: "gitlab"
       gitlab2: "gitlab"
+
+discord-bot:
+  token: "letmein"
+  baseUrl: "http://localhost:8888"
+
 
 ---
 

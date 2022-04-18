@@ -1,23 +1,39 @@
 package com.github.devcordde.pluginjamsystem.resolver.user;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.devcordde.pluginjamsystem.dto.User;
-import com.github.devcordde.pluginjamsystem.dto.user.DiscordUser;
+import com.github.devcordde.pluginjamsystem.services.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DiscordUserResolver implements UserResolver {
+
+    private final ObjectMapper mapper = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, false)
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    private final UsersService usersService;
+
+    @Autowired
+    public DiscordUserResolver(UsersService usersService) {
+        this.usersService = usersService;
+    }
+
     @Override
     public User resolve(OAuth2AuthenticationToken accessToken) {
-        var result = new DiscordUser();
-
         var attributes = accessToken.getPrincipal().getAttributes();
 
-        result.handle(String.format("%s#%s", attributes.get("username"), attributes.get("discriminator")));
-        result.name((String) attributes.get("username"));
-        result.avatarUrl(String.format("https://cdn.discordapp.com/avatars/%s/%s.png", attributes.get("id"), attributes.get("avatar")));
+        var user = mapper.convertValue(attributes, User.class);
 
-        return result;
+        var mutualGuilds = usersService.getMutualGuilds(user.id());
+        user.guilds(mutualGuilds);
+        if (!mutualGuilds.isEmpty()) {
+            user.currentGuild(mutualGuilds.get(0));
+        }
+
+        return user;
     }
 
     @Override

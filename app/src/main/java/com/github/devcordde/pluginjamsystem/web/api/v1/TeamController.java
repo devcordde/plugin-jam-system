@@ -39,8 +39,6 @@ public class TeamController {
 
     @GetMapping
     public ResponseEntity<List<Team>> getTeams(@UserInfo User user) {
-
-
         var fake = fake("Ape 1");
 
 
@@ -48,7 +46,7 @@ public class TeamController {
                 List.of(
                         new Team(new TeamProfile(
                                 "Team1",
-                                user,
+                                0,
                                 "https://github.com/devcordde/plugin-jam-system",
                                 lorem
                         ),
@@ -61,7 +59,7 @@ public class TeamController {
                         ),
                         new Team(new TeamProfile(
                                 "Team2",
-                                fake,
+                                0,
                                 "https://github.com/devcordde/plugin-jam-bot",
                                 lorem
                         ),
@@ -77,7 +75,7 @@ public class TeamController {
         return ResponseEntity.ok(
                 new Team(new TeamProfile(
                         "Team1",
-                        user,
+                        0,
                         "https://github.com/devcordde/plugin-jam-system",
                         lorem
                 ),
@@ -87,6 +85,6 @@ public class TeamController {
     }
 
     private User fake(String name) {
-        return new User(UUID.randomUUID().toString(), name, "https://banner2.cleanpng.com/20180413/gee/kisspng-discord-avatar-twitch-youtube-profile-5ad03f365071c0.1274698915235971103295.jpg");
+        return new User(0, name, "0000", "https://banner2.cleanpng.com/20180413/gee/kisspng-discord-avatar-twitch-youtube-profile-5ad03f365071c0.1274698915235971103295.jpg");
     }
 }

@@ -1,75 +1,87 @@
 package com.github.devcordde.pluginjamsystem.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Objects;
+import java.util.List;
 
 public class User {
-    @JsonProperty("handle")
-    private String handle;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("avatar_url")
-    private String avatarUrl;
+    private long id;
+    private String username;
+    private String avatar;
+    private String discriminator;
+    private GuildProfile currentGuild;
+    private List<GuildProfile> guilds;
 
-    public User(
-            String handle,
-            String name,
-            String avatarUrl
-    ) {
-        this.handle = handle;
-        this.name = name;
-        this.avatarUrl = avatarUrl;
+    @JsonCreator
+    public User(@JsonProperty("id") long id, @JsonProperty("username") String username, @JsonProperty("discriminator") String discriminator, @JsonProperty("avatar") String avatar) {
+        this.id = id;
+        this.username = username;
+        this.avatar = avatar;
+        this.discriminator = discriminator;
     }
 
     public User() {
     }
 
-    public void handle(String discordHandle) {
-        this.handle = discordHandle;
-    }
-
-    public void name(String name) {
-        this.name = name;
-    }
-
-    public void avatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
+    @JsonProperty("handle")
     public String handle() {
-        return handle;
+        return String.format("%s#%s", username, discriminator);
     }
 
-    public String name() {
-        return name;
+    @JsonProperty("username")
+    public String username() {
+        return username;
     }
 
+    @JsonProperty("avatar_url")
     public String avatarUrl() {
-        return avatarUrl;
+        var file = avatar.startsWith("a_") ? "gif" : "png";
+        return String.format("https://cdn.discordapp.com/avatars/%s/%s.%s", id, avatar, file);
+    }
+
+    @JsonProperty("current_guild")
+    public GuildProfile currentGuild() {
+        return currentGuild;
+    }
+
+    public void currentGuild(GuildProfile currentGuild) {
+        this.currentGuild = currentGuild;
+    }
+
+    @JsonProperty("guilds")
+    public List<GuildProfile> guilds() {
+        return guilds;
+    }
+
+    public void guilds(List<GuildProfile> guilds) {
+        this.guilds = guilds;
+    }
+
+    public long id() {
+        return id;
+    }
+
+    public String avatar() {
+        return avatar;
+    }
+
+    public String discriminator() {
+        return discriminator;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (User) obj;
-        return Objects.equals(this.handle, that.handle) &&
-                Objects.equals(this.name, that.name) &&
-                Objects.equals(this.avatarUrl, that.avatarUrl);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(handle, name, avatarUrl);
+        return (int) (id ^ (id >>> 32));
     }
-
-    @Override
-    public String toString() {
-        return "User[" +
-                "discordHandle=" + handle + ", " +
-                "name=" + name + ", " +
-                "avatarUrl=" + avatarUrl + ']';
-    }
-
 }

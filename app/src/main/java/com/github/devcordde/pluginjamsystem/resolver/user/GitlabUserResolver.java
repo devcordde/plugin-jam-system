@@ -12,9 +12,10 @@ public class GitlabUserResolver implements UserResolver {
         var result = new GitlabUser();
         var attributes = accessToken.getPrincipal().getAttributes();
 
-        result.handle((String) attributes.get("email"));
-        result.avatarUrl((String) attributes.get("picture"));
-        result.name((String) attributes.get("nickname"));
+        // TODO: Change to resolver for gitlab repositories.
+//        result.handle((String) attributes.get("email"));
+//        result.avatarUrl((String) attributes.get("picture"));
+//        result.username((String) attributes.get("nickname"));
         return result;
     }
 

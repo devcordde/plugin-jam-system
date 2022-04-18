@@ -3,7 +3,6 @@ package com.github.devcordde.pluginjamsystem.services;
 import com.github.devcordde.pluginjamsystem.conf.props.BotApi;
 import com.github.devcordde.pluginjamsystem.dto.GuildProfile;
 import com.github.devcordde.pluginjamsystem.dto.UserProfile;
-import com.github.devcordde.pluginjamsystem.dto.team.Team;
 import com.github.devcordde.pluginjamsystem.dto.team.TeamProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -25,7 +24,7 @@ public class UsersService {
     public UsersService(BotApi botApi) {
         client = WebClient.builder()
                 .defaultHeader("authorization", botApi.token())
-                .baseUrl(botApi.baseUrl() + "/api/v1/users")
+                .baseUrl(botApi.baseUrl() + "/api/v1/users/")
                 .build();
     }
 

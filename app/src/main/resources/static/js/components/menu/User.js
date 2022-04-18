@@ -9,7 +9,7 @@ export default {
             <v-list-item-content>
                 <v-col>
                     <v-list-item-title class="text-h6">
-                        {{user.name}}
+                        {{user.username}}
                     </v-list-item-title>
                     <v-list-item-subtitle>
                         {{user.handle}}

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/user")
-public class UserDataController {
+public class UserController {
 
     @GetMapping(path = "/current")
     public ResponseEntity<User> getLoggedInUser(@UserInfo User user) {

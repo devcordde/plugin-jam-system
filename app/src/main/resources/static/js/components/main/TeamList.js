@@ -1,29 +1,43 @@
 import team_service from "../../services/team_service.js";
 import TeamProfile from "./teamlist/TeamProfile.js";
+import Overview from "./teamsettings/Overview.js";
 
 export default {
 	template: `
-        <span>
-            <v-card class="mb-10"
+        <v-container>
+            <v-row
+                class="mb-10"
                 v-for="team in teams"
                 :key="team.profile.name"
-                v-model="team.active"
-                no-action
-                >
+            >
+                <v-col cols="12">
                 <Team-profile
                     :team="team"
+                    @edit="() => edit = team"
                 >
                 </Team-profile>
-            </v-card>
-        </span>
+                </v-col>
+							      <v-container v-show="edit == team">
+							        <Overview
+																	:profile="team.profile"
+																	@profile-update="(profile) => {
+																	team.profile = profile;
+																	edit = null;
+																	}"
+																	@abort="() => edit = null"
+																></Overview>
+										</v-container>
+						</v-row>
+        </v-container>
 	`,
 	components: {
 		TeamProfile,
+		Overview
 	},
 	mounted() {
 		team_service.teams().then(teams => {
+			this.edits = {};
 			teams.forEach(team => {
-				team.active = true;
 				this.teams.push(team);
 			});
 		});
@@ -32,6 +46,7 @@ export default {
 		return {
 			team_service: team_service,
 			teams: [],
+			edit: null
 		}
 	}
 }

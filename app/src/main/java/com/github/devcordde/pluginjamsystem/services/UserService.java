@@ -16,12 +16,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class UsersService {
+public class UserService {
 
     private final WebClient client;
 
     @Autowired
-    public UsersService(BotApi botApi) {
+    public UserService(BotApi botApi) {
         client = WebClient.builder()
                 .defaultHeader("authorization", botApi.token())
                 .baseUrl(botApi.baseUrl() + "/api/v1/users/")

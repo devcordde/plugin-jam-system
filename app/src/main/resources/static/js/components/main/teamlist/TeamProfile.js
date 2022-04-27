@@ -2,32 +2,31 @@ import TeamMember from "./TeamMember.js";
 
 export default {
 	template: `
-        <span>
+        <v-container>
             <v-row>
-                <v-col cols="12">
-                    <h3 v-text="team.profile.name" class="ma-5 ml-5 mt-3"></h3>
-                </v-col>
+                    <h3 v-text="team.profile.name" ></h3>
+                    <v-btn icon small @click="edit" color="gray"><v-icon>mdi-pencil-outline</v-icon></v-btn>
             </v-row>
             <v-row>
-                <v-col cols="1" class="ml-10">
+                <v-col cols="1">
                     <v-row>
                         <v-col cols="12">
                             <h4>Info</h4>
                         </v-col>
                     </v-row>
-                        <v-row>
-                            <v-col cols="12" class="ml-5">
-                                <v-btn icon :href="team.profile.projectUrl" target="_blank">
-                                    <v-icon>mdi-git</v-icon> <u>Source</u>
-                                </v-btn>
-                            </v-col>
-                        </v-row>
+                    <v-row>
+                        <v-col cols="12" class="ml-5">
+                            <v-btn icon :href="team.profile.projectUrl" target="_blank">
+                                <v-icon>mdi-git</v-icon> <u>Source</u>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
                 </v-col>
-                
-                <v-col cols="4">
-                        <v-row class="pa-5">
+
+                <v-col cols="5">
+                        <!--<v-card class="pa-5">-->
                         {{team.profile.description}}
-                        </v-row>
+                        <!--</v-card>-->
                 </v-col>
                 
                 <v-col cols="6">
@@ -52,7 +51,7 @@ export default {
                     </v-row>
                 </v-col>
              </v-row>
-    </span>
+    </v-container>
 	`,
 	components: {
 		TeamMember: TeamMember
@@ -62,5 +61,10 @@ export default {
 			type: Object,
 			required: true
 		},
+	},
+	methods: {
+		edit() {
+			this.$emit("edit");
+		}
 	}
 }

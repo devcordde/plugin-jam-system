@@ -7,7 +7,7 @@ export default {
                     dot
                     color="orange"
                     overlay
-                    :value="member.discord_handle === leader.discord_handle ? 1 : 0"
+                    :value="member.handle === leader.handle ? 1 : 0"
                     >
                     <v-avatar size="40">
                         <v-img :src="member.avatar_url">

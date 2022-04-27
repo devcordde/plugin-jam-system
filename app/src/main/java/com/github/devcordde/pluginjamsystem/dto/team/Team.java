@@ -1,11 +1,11 @@
 package com.github.devcordde.pluginjamsystem.dto.team;
 
-import com.github.devcordde.pluginjamsystem.dto.User;
+import com.github.devcordde.pluginjamsystem.dto.UserProfile;
 
-import java.util.Set;
+import java.util.List;
 
 public record Team(
         TeamProfile profile,
-        Set<User> members
+        List<UserProfile> members
 ) {
 }

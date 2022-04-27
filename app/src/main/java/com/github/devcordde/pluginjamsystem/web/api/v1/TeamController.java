@@ -1,10 +1,12 @@
 package com.github.devcordde.pluginjamsystem.web.api.v1;
 
 import com.github.devcordde.pluginjamsystem.dto.User;
+import com.github.devcordde.pluginjamsystem.dto.request.UpdateTeamProfile;
 import com.github.devcordde.pluginjamsystem.dto.team.Team;
 import com.github.devcordde.pluginjamsystem.dto.team.TeamProfile;
 import com.github.devcordde.pluginjamsystem.resolver.UserInfo;
 import com.github.devcordde.pluginjamsystem.services.TeamService;
+import com.github.devcordde.pluginjamsystem.services.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/api/v1/teams")
@@ -36,56 +38,28 @@ public class TeamController {
             """;
 
     private final TeamService teamService;
+    private final UserService userService;
 
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamService teamService, UserService userService) {
         this.teamService = teamService;
+        this.userService = userService;
     }
 
     @GetMapping
     public ResponseEntity<List<Team>> getTeams(@UserInfo User user) {
-        var fake = fake("Ape 1", 1);
-
-
-        return ResponseEntity.ok(
-                List.of(
-                        new Team(new TeamProfile(
-                                "Team1",
-                                0,
-                                "https://github.com/devcordde/plugin-jam-system",
-                                lorem
-                        ),
-                                Set.of(
-                                        user,
-                                        fake("Ape 2", 2),
-                                        fake("Ape 3", 3),
-                                        fake("Ape 4", 4)
-                                )
-                        ),
-                        new Team(new TeamProfile(
-                                "Team2",
-                                0,
-                                "https://github.com/devcordde/plugin-jam-bot",
-                                lorem
-                        ),
-                                Set.of(fake)
-                        )
-                )
-        );
+        return ResponseEntity.ok(teamService.getTeams(user.currentGuild().idLong()));
     }
 
 
     @GetMapping(path = "/own")
     public ResponseEntity<Team> getOwnTeam(@UserInfo User user) {
-        return ResponseEntity.ok(
-                new Team(new TeamProfile(
-                        "Team1",
-                        0,
-                        "https://github.com/devcordde/plugin-jam-system",
-                        lorem
-                ),
-                        Set.of(user)
-                )
-        );
+        var teamProfile = userService.getTeam(user.id(), user.currentGuild().idLong());
+        if (teamProfile != null) {
+            var members = teamService.getMember(user.currentGuild().idLong(), teamProfile.id());
+            var team = new Team(teamProfile, members);
+            return ResponseEntity.ok(team);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping(
@@ -94,15 +68,57 @@ public class TeamController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<Team> saveTeam(@UserInfo User user, @RequestBody TeamProfile teamProfile) {
-        return ResponseEntity.ok(
-                new Team(teamProfile,
-                        Set.of(user)
-                )
-        );
+    public ResponseEntity<Team> saveTeam(@UserInfo User user, @RequestBody UpdateTeamProfile updateTeamProfile) {
+        var botTeamProfile = userService.getTeam(user.id(), user.currentGuild().idLong());
+        var teamProfile = updateTeamProfile.teamProfile();
+
+        if (botTeamProfile != null) {
+            runIfFirstNonNullAndSecondNonEqual(teamProfile, botTeamProfile, TeamProfile::name, (name) -> {
+                teamService.setTeamName(
+                        user.currentGuild().idLong(),
+                        botTeamProfile.id(),
+                        updateTeamProfile.token(),
+                        name
+                );
+            });
+
+            runIfFirstNonNullAndSecondNonEqual(teamProfile, botTeamProfile, TeamProfile::description, (description) -> {
+                teamService.setTeamDescription(
+                        user.currentGuild().idLong(),
+                        botTeamProfile.id(),
+                        updateTeamProfile.token(),
+                        description
+                );
+            });
+
+            runIfFirstNonNullAndSecondNonEqual(teamProfile, botTeamProfile, TeamProfile::projectUrl, (projectUrl) -> {
+                teamService.setTeamProjectUrl(
+                        user.currentGuild().idLong(),
+                        botTeamProfile.id(),
+                        updateTeamProfile.token(),
+                        projectUrl
+                );
+            });
+
+            runIfFirstNonNullAndSecondNonEqual(teamProfile, botTeamProfile, TeamProfile::user, (leader) -> {
+                teamService.setTeamLeader(
+                        user.currentGuild().idLong(),
+                        botTeamProfile.id(),
+                        updateTeamProfile.token(),
+                        leader
+                );
+            });
+        }
+        return getOwnTeam(user);
     }
 
-    private User fake(String name, int id) {
-        return new User(id, name, "0000", "https://banner2.cleanpng.com/20180413/gee/kisspng-discord-avatar-twitch-youtube-profile-5ad03f365071c0.1274698915235971103295.jpg");
+    private <T, S extends Comparable<S>> void runIfFirstNonNullAndSecondNonEqual(T first, T second, Function<T, S> getter, Consumer<S> valueNew) {
+        if (first != null) {
+            var valueToSet = getter.apply(first);
+            var databaseValue = getter.apply(second);
+            if (!valueToSet.equals(databaseValue)) {
+                valueNew.accept(valueToSet);
+            }
+        }
     }
 }

@@ -45,7 +45,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .oauth2Login()
                 .tokenEndpoint().accessTokenResponseClient(accessTokenResponseClient())
                 .and()
-                .userInfoEndpoint().userService(userService());
+                .userInfoEndpoint().userService(oauthUserService());
     }
 
 
@@ -64,7 +64,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public OAuth2UserService<OAuth2UserRequest, OAuth2User> userService() {
+    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oauthUserService() {
         DefaultOAuth2UserService service = new DefaultOAuth2UserService();
 
         service.setRequestEntityConverter(new OAuth2UserRequestEntityConverter() {

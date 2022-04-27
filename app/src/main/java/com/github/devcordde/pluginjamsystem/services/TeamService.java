@@ -116,7 +116,7 @@ public class TeamService {
 
     @Nullable
     public TeamProfile setTeamName(long guildId, int teamId, String token, String name) {
-        var teamProfile = new TeamProfile(name, 0L, "", "");
+        var teamProfile = new TeamProfile(teamId, name, 0L, "", "");
         return client.put().uri(uriBuilder -> uriBuilder
                         .path("{guildId}/{teamId}/leader/name")
                         .build(guildId, teamId)
@@ -135,7 +135,7 @@ public class TeamService {
 
     @Nullable
     public TeamProfile setTeamProjectUrl(long guildId, int teamId, String token, String projectUrl) {
-        var teamProfile = new TeamProfile(null, 0L, projectUrl, null);
+        var teamProfile = new TeamProfile(teamId, null, 0L, projectUrl, null);
         return client.put().uri(uriBuilder -> uriBuilder
                         .path("{guildId}/{teamId}/leader/projecturl")
                         .build(guildId, teamId)
@@ -154,7 +154,7 @@ public class TeamService {
 
     @Nullable
     public TeamProfile setTeamLeader(long guildId, int teamId, String token, long leader) {
-        var teamProfile = new TeamProfile(null, leader, null, null);
+        var teamProfile = new TeamProfile(teamId,null, leader, null, null);
         return client.put().uri(uriBuilder -> uriBuilder
                         .path("{guildId}/{teamId}/leader/leader")
                         .build(guildId, teamId)
@@ -173,7 +173,7 @@ public class TeamService {
 
     @Nullable
     public TeamProfile setTeamDescription(long guildId, int teamId, String token, String description) {
-        var teamProfile = new TeamProfile(null, 0L, null, description);
+        var teamProfile = new TeamProfile(teamId,null, 0L, null, description);
         return client.put().uri(uriBuilder -> uriBuilder
                         .path("{guildId}/{teamId}/leader/description")
                         .build(guildId, teamId)

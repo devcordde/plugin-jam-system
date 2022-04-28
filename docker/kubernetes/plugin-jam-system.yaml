@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-jam-system
+spec:
+  template:
+    metadata:
+      labels:
+        app: game-jam-system
+    spec:
+      containers:
+        - name: game-jam-system
+          image: game-jam-system
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: game-jam-system
+      initContainers:
+        - name: init-myservice
+          image: busybox:1.28
+          command: [ 'sh', '-c', "until nslookup database.default.svc.cluster.local; do echo waiting for myservice; sleep 2; done" ]
+
+  selector:
+    matchLabels:
+      app: game-jam-system
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: game-jam-system-01
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: game-jam-system

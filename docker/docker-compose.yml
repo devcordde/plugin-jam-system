@@ -1,0 +1,28 @@
+version: v3
+
+services:
+  game-jam-system:
+    image: game-jam-system
+    build:
+      dockerfile: docker/game-jam-system.DockerFile
+      context: ..
+    networks:
+      - plugin-jam
+    depends_on:
+      - game-jam-system-database
+    ports:
+      - "8080:8080"
+  game-jam-system-database:
+    image: postgres:14.2
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_PASSWORD: "changeme"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "db"
+    networks:
+      - plugin-jam
+networks:
+  plugin-jam:
+    name: "plugin-jam"
+    external: false

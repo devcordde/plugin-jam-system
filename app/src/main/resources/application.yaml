@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: "jdbc:postgresql://localhost/my_database"
-    username: user
-    password: password
+    url: "jdbc:postgresql://database/db"
+    username: postgres
+    password: changeme
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
@@ -10,7 +10,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   security:
     oauth2:
       client:
@@ -23,7 +23,7 @@ spring:
             authorization-grantType: authorization_code
             scope:
               - identify
-            redirect-uri: "{baseUrl}/login/oauth2/code/discord"
+            redirect-uri: "{baseScheme}://{baseHost}{basePort}{basePath}/login/oauth2/code/discord"
             client-name: Discord
         provider:
           discord:

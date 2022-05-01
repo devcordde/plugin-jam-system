@@ -39,7 +39,7 @@ public class TeamController {
 
     @GetMapping
     public ResponseEntity<List<Team>> getTeams(@UserInfo User user) {
-        var fake = fake("Ape 1");
+        var fake = fake("Ape 1", 1);
 
 
         return ResponseEntity.ok(
@@ -52,9 +52,9 @@ public class TeamController {
                         ),
                                 Set.of(
                                         user,
-                                        fake("Ape 2"),
-                                        fake("Ape 3"),
-                                        fake("Ape 4")
+                                        fake("Ape 2", 2),
+                                        fake("Ape 3", 3),
+                                        fake("Ape 4", 4)
                                 )
                         ),
                         new Team(new TeamProfile(
@@ -84,7 +84,7 @@ public class TeamController {
         );
     }
 
-    private User fake(String name) {
-        return new User(0, name, "0000", "https://banner2.cleanpng.com/20180413/gee/kisspng-discord-avatar-twitch-youtube-profile-5ad03f365071c0.1274698915235971103295.jpg");
+    private User fake(String name, int id) {
+        return new User(id, name, "0000", "https://banner2.cleanpng.com/20180413/gee/kisspng-discord-avatar-twitch-youtube-profile-5ad03f365071c0.1274698915235971103295.jpg");
     }
 }

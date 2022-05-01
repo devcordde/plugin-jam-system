@@ -11,8 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
+import javax.servlet.Filter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,5 +55,10 @@ public class GlobalBeans {
     @Qualifier("user-resolver")
     public HandlerMethodArgumentResolver userResolver() {
         return new UserInfoResolver(this.userResolverMap);
+    }
+
+    @Bean
+    public Filter forwardedHeaderFilter() {
+        return new ForwardedHeaderFilter();
     }
 }

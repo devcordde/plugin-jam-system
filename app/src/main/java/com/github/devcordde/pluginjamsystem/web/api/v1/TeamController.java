@@ -47,7 +47,12 @@ public class TeamController {
 
     @GetMapping
     public ResponseEntity<List<Team>> getTeams(@UserInfo User user) {
-        return ResponseEntity.ok(teamService.getTeams(user.currentGuild().idLong()));
+        var currentGuild = user.currentGuild();
+        if(currentGuild != null){
+            var response = teamService.getTeams(user.currentGuild().idLong());
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.ok(List.of());
     }
 
 

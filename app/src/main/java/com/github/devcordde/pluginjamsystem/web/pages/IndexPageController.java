@@ -3,20 +3,14 @@ package com.github.devcordde.pluginjamsystem.web.pages;
 import com.github.devcordde.pluginjamsystem.dto.AuthUrl;
 import com.github.devcordde.pluginjamsystem.dto.User;
 import com.github.devcordde.pluginjamsystem.resolver.UserInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 public class IndexPageController {

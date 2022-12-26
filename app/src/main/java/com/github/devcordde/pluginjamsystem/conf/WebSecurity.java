@@ -27,22 +27,26 @@ public class WebSecurity {
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient,
+            OAuth2UserService<OAuth2UserRequest, OAuth2User> oauthUserService
+    ) throws Exception {
         http
                 .csrf().disable()
                 .cors().disable()
                 .logout(logout -> {
                     logout.logoutSuccessUrl("/");
                 })
-                .authorizeRequests()
-                .antMatchers("/api/**")
+                .authorizeHttpRequests()
+                .requestMatchers("/api/**")
                 .authenticated()
-                .antMatchers("/**", "/js/**", "/html/**", "/css/**", "/oauth2/**").permitAll()
+                .requestMatchers("/**", "/js/**", "/html/**", "/css/**", "/oauth2/**").permitAll()
                 .and()
                 .oauth2Login()
-                .tokenEndpoint().accessTokenResponseClient(accessTokenResponseClient())
+                .tokenEndpoint().accessTokenResponseClient(accessTokenResponseClient)
                 .and()
-                .userInfoEndpoint().userService(oauthUserService());
+                .userInfoEndpoint().userService(oauthUserService);
 
         return http.build();
     }

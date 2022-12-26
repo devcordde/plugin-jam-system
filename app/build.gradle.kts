@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "2.7.6"
+    id("org.springframework.boot") version "3.0.1"
     id("io.spring.dependency-management") version "1.1.0"
     java
 }
@@ -23,10 +23,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.hibernate:hibernate-core")
+    implementation("org.hibernate:hibernate-core:6.1.6.Final")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.1.1.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("com.google.code.findbugs:jsr305:3.0.2")
 

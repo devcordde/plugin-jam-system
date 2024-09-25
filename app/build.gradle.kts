@@ -35,8 +35,21 @@ dependencies {
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("com.google.code.findbugs:jsr305:3.0.2")
+
     implementation("org.webjars:webjars-locator:0.52")
     implementation("org.webjars:webjars-locator-core:0.59")
+
+    runtimeOnly("org.webjars.npm:vue:2.7.16") {
+        exclude(group = "org.webjars.npm", module = "vue__compiler-sfc")
+    }
+    runtimeOnly("org.webjars.npm:vuetify:2.7.0")
+    runtimeOnly("org.webjars.npm:vue-router:3.5.3")
+    implementation("org.webjars:material-design-icons:4.0.0")
+
+
+
+
+
 
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

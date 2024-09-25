@@ -4,16 +4,15 @@
 	<meta charset="UTF-8">
 	<title>Title</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<link th:href="@{/webjars/material-design-icons/material-icons.css}" rel="stylesheet">
+	<link th:href="@{/webjars/vuetify/dist/vuetify.min.css}" rel="stylesheet">
 	<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-<script src="https://unpkg.com/vue-router@3/dist/vue-router.js"></script>
-
+<script th:src="@{/webjars/vue/dist/vue.min.js}"></script>
+<script th:src="@{/webjars/vuetify/dist/vuetify.min.js}"></script>
+<script th:src="@{/webjars/vue-router/dist/vue-router.min.js}"></script>
 
 <script type="module" th:src="@{/js/app.js}"></script>
 <div id="app"></div>

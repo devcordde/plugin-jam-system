@@ -1,0 +1,80 @@
+[versions]
+
+
+spring-dependency-management = "1.1.6"
+dependency-version-checker = "0.51.0"
+
+
+spring-boot = "3.3.4"
+jsr = "3.0.2"
+
+webjars-locator = "0.52"
+webjars-locator-core = "0.59"
+
+vue = "2.7.16"
+vue-router = "3.5.3"
+vuetify = "2.7.0"
+material-design-icons = "4.0.0"
+
+
+[libraries]
+
+find-bugs = { group = "com.google.code.findbugs", name = "jsr305", version.ref = "jsr" }
+
+webjars-locator = { group = "org.webjars", name = "webjars-locator", version.ref = "webjars-locator" }
+webjars-locator-core = { group = "org.webjars", name = "webjars-locator-core", version.ref = "webjars-locator-core" }
+
+vue = { group = "org.webjars.npm", name = "vue", version.ref = "vue" }
+vuetify = { group = "org.webjars.npm", name = "vuetify", version.ref = "vuetify" }
+vue-router = { group = "org.webjars.npm", name = "vue-router", version.ref = "vue-router" }
+material-icons = { group = "org.webjars", name = "material-design-icons", version.ref = "material-design-icons" }
+
+spring-boot-dependencies = { group = "org.springframework.boot", name = "spring-boot-dependencies", version.ref = "spring-boot" }
+
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+spring-boot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux" }
+spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
+spring-boot-starter-thymeleaf = { group = "org.springframework.boot", name = "spring-boot-starter-thymeleaf" }
+spring-boot-starter-oauth2-client = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-client" }
+
+thymeleaf-extras-springsecurity = { group = "org.thymeleaf.extras", name = "thymeleaf-extras-springsecurity6" }
+
+h2 = { group = "com.h2database", name = "h2"}
+postgresql = { group = "org.postgresql", name = "postgresql"}
+
+spring-boot-configuration-processors = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
+
+spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools"}
+
+
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test"}
+spring-security-test = { group = "org.springframework.security", name = "spring-security-test"}
+
+
+[bundles]
+spring-boot-starter = [
+    "spring-boot-starter-actuator",
+    "spring-boot-starter-data-jpa",
+    "spring-boot-starter-oauth2-client",
+    "spring-boot-starter-security",
+    "spring-boot-starter-thymeleaf",
+    "spring-boot-starter-web",
+    "spring-boot-starter-webflux",
+    "thymeleaf-extras-springsecurity"
+]
+
+databases = [ "h2", "postgresql"]
+
+spring-test = ["spring-boot-starter-test", "spring-security-test"]
+
+webjars-locator = ["webjars-locator", "webjars-locator-core"]
+webjars-dependencies = ["vue-router", "vuetify", "vue", "material-icons"]
+
+
+[plugins]
+
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+dependency-version-checker = { id = "com.github.ben-manes.versions", version.ref = "dependency-version-checker" }

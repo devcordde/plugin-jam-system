@@ -21,4 +21,6 @@ jobs:
           architecture: x64
           distribution: "temurin"
       - name: Build with gradle
-        run: ./gradlew build
+        run: |
+          cd app
+          ./gradlew clean build

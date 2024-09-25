@@ -18,4 +18,6 @@ jobs:
           distribution: temurin
           java-version: 21
       - name: Clean Build
-        run: ./gradlew clean build
+        run: |
+          cd app
+          ./gradlew clean build

@@ -1,11 +1,13 @@
 package com.github.devcordde.pluginjamsystem.conf;
 
+import java.util.Objects;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
@@ -16,8 +18,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequestEnti
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.Objects;
 
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
@@ -32,21 +32,20 @@ public class WebSecurity {
             OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient,
             OAuth2UserService<OAuth2UserRequest, OAuth2User> oauthUserService
     ) throws Exception {
-        http
-                .csrf().disable()
-                .cors().disable()
+        http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
                 .logout(logout -> {
                     logout.logoutSuccessUrl("/");
-                })
-                .authorizeHttpRequests()
-                .requestMatchers("/api/**")
-                .authenticated()
-                .requestMatchers("/**", "/js/**", "/html/**", "/css/**", "/oauth2/**").permitAll()
-                .and()
-                .oauth2Login()
-                .tokenEndpoint().accessTokenResponseClient(accessTokenResponseClient)
-                .and()
-                .userInfoEndpoint().userService(oauthUserService);
+                }).authorizeHttpRequests(registry -> {
+                    registry.requestMatchers("/api/**").authenticated();
+                    registry.requestMatchers("/**", "/js/**", "/html/**", "/css/**", "/oauth2/**").permitAll();
+                }).oauth2Login(configurer -> {
+                    configurer.tokenEndpoint(config -> {
+                        config.accessTokenResponseClient(accessTokenResponseClient);
+                    });
+                    configurer.userInfoEndpoint(config -> {
+                        config.userService(oauthUserService);
+                    });
+                });
 
         return http.build();
     }
